@@ -1,0 +1,105 @@
+# AWS DataSync – S3 to EFS Data Transfer
+
+## 📌 Project Overview
+
+Implemented a data transfer solution using AWS DataSync to transfer data from an Amazon S3 bucket to Amazon EFS and verify the transferred data using an Amazon EC2 Linux instance.
+
+## 🏗️ Architecture
+
+S3 Bucket
+     |
+     | Source
+     ↓
+AWS DataSync
+     |
+     | Data Transfer Task
+     ↓
+Amazon EFS
+     |
+     | Mount
+     ↓
+Amazon EC2
+     |
+     ↓
+Verify Transferred Files
+
+## 🎯 Objective
+
+The objective of this project was to understand how AWS DataSync can be used to transfer data between AWS storage services and how the transferred data can be accessed from an EC2 instance.
+
+## 🛠️ AWS Services Used
+
+- Amazon S3
+- AWS DataSync
+- Amazon EFS
+- Amazon EC2
+- IAM
+- VPC
+- Security Groups
+
+## 🔧 Implementation
+
+### 1. Create S3 Bucket
+
+Created a private S3 bucket and uploaded sample files.
+
+Example:
+
+- file1.txt
+- file2.txt
+- sample.html
+
+The S3 bucket was configured as the source location.
+
+### 2. Create Amazon EFS
+
+Created an EFS file system inside the VPC.
+
+Configured:
+
+- EFS File System
+- Mount Target
+- Security Group
+
+### 3. Configure AWS DataSync
+
+Created an AWS DataSync configuration with:
+
+Source:
+Amazon S3
+
+Destination:
+Amazon EFS
+
+### 4. Create Source Location
+
+Configured the S3 bucket as the DataSync source location and provided the required permissions.
+
+### 5. Create Destination Location
+
+Configured Amazon EFS as the destination location.
+
+### 6. Create DataSync Task
+
+Created a DataSync task connecting the S3 source location with the EFS destination location.
+
+Started the task and monitored the transfer.
+
+### 7. Verify Data on EC2
+
+Launched an Amazon Linux EC2 instance and mounted the EFS file system.
+
+Commands used:
+
+```bash
+sudo -s
+
+yum install -y amazon-efs-utils
+
+mkdir /mnt/efs
+
+mount -t efs <EFS-ID>:/ /mnt/efs
+
+cd /mnt/efs
+
+ls
