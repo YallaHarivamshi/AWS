@@ -1,0 +1,46 @@
+EC2 Project
+
+Server 1 and Server 2
+
+#!/bin/bash
+sudo -s
+yum install -y httpd
+yum install -y wget
+wget --content-disposition https://templatemo.com/download/templatemo_591_villa_agency
+yum install -y unzip
+unzip templatemo_591_villa_agency.zip
+cp -r templatemo_591_villa_agency/* /var/www/html
+systemctl enable httpd
+systemctl start httpd
+
+
+Server 3 and Server 4
+
+#!/bin/bash
+sudo -s
+yum install -y httpd
+yum install -y wget
+wget --content-disposition https://templatemo.com/download/templatemo_558_klassy_cafe
+yum install -y unzip
+unzip templatemo_558_klassy_cafe.zip
+cp -r templatemo_558_klassy_cafe/* /var/www/html
+systemctl enable httpd
+systemctl start httpd
+
+
+
+Setting up HTTPS for your Application:
+======================================
+How to create HTTPS certificates in AWS?
+
+Go to ACM Service
+Click on Request Certificate
+Select Request a Public Certificate --> Next
+Provide Domain Name : Ex : *.boom.com [First you need to purchase domain in R53]
+Click on the Certificate and Create records in R53. (Make sure
+you purchase the domain first and then create record)
+
+Go to Load Balancer --> Listeners and Rules --> Add listener --> select httpd 443 --> From ACM --> Select Certificate
+
+AWS will auto -renew the certificate every year
+If any certificate is imported into ACM, you need to renew it manually
